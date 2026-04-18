@@ -180,3 +180,68 @@ AWS provides pre-built rules, but we can make our own rules too.
 An example would be ensuring encryption is turnd on for all EBS (Elastick Block Store) volumes in our account
 - For context, EBS is essential a virtual hard drive in the cloud that you attach to an EC2 instance
 
+# Infrastructure Protection
+
+### Amazon VPC
+
+With Amazon VPC, we can isolate our AWS resources in the cloud by launching resoures in a virtual netword that we have defined.
+
+1) Control subnet routing (Group resources to be private or public to the internet)
+2) Configure Network ACLs (firewall), which is on the subnet level. This is *OPTIONAL*
+3) Configure Security Groups (firewall), which is on the instance level. (Per a specific resource like an EC2 instance)
+
+## AWS Systems Manager
+
+- Automate common and repetitive IT operations across multiple AWS resources
+- Collect Data
+- Deploy software patches across multiple EC2s
+- Parameter Store holds config data, secrets, etc
+- Run Command: manage instances remotely without logging into servers
+- Session Manager: Manage Windows and Linux EC2 instances through a browser based shell or CLI without the need to manage SSH keys, opening inbound ports, or use bastion hosts (a gateway for public requests into a private network).
+
+### Additional AWS Services
+
+AWS FIrewall Manager
+- A security management service that helps you centrally configure and manage AWS Web Application Firewall rules across multiple accounts and applications
+
+AWS Direct Connect
+- A cloud service solution used to establish a dedicated and secure network connection from your premises to AWS
+
+AWS CloudFormation
+- Automates deploying AWS resources in a consistent manner
+
+Amazon Inspector
+- Continously scans and assess applications for vulnerabilities or deviations from best practices
+-  This is different than AWS Trust Advisor because it focuses on vulnerabilities only.
+
+# Data Protection
+
+Protection methods for data at **rest** (in storages like S3)
+
+1) Client-Side Encryption
+    - Encrypt data before sending to AWS and storing that
+2) Server-Side Encryption
+    - AWS encrypts data on your behalf after it has been receieved
+
+Protection methods for data in **transit** (ANY data being transmitted form one system to another)
+
+1) HTTPS Endpoints by using TLS
+2) AWS can generate public and private certificates used for TLS encryption
+3) IPsec with VPN connectivity into AWS to facilitate encryption of traffic.
+
+### Additional Services for data protection
+
+AWS CloudHSM
+- generate, store, import, export, and maange cryptographic keys
+
+Amazon S3 Glacier
+- Storage service optimized for INFREQUENTLY used data (cold data).
+- Durable, low cost, has security features like data archiving and backup
+
+AWS Certificate Manager
+- Handles complexity of creating and managing public SSL/TLS certificate
+
+Amazon Macie
+- Uses ML to automatically discover, classify, and protect sensitive data in AWS
+
+Continue on AWS Service Spotlight on AWS KMS (Key Management Service)
