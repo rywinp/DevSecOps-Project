@@ -54,7 +54,7 @@ Not every Region offers all AWS Services so we need to consider the services we 
 ### AWS Artifacts
 - AWS's security and compliance reports for customers to check
 
-## Security INSIDE the cloud
+# Security INSIDE the cloud
 
 How to create applications and design architectures in the cloud that are **secure**
 
@@ -66,7 +66,7 @@ How to create applications and design architectures in the cloud that are **secu
     - user access keys through IAM Users (if server isn't deployed as an AWS Instance)
     - IAM Roles which are assigned to instances on AWS (Must be deployed in an AWS environement that supports using IAM Roles)
 
-### AWS Identity and Access Management
+## AWS Identity and Access Management
 
 This is the centralized mechanism for creating and managing individual users and their permisions with our AWS account (we are the root user)
 
@@ -108,5 +108,75 @@ A way to merge multiple AWS accoutns and business applications into 1 account. T
 Run a Microsoft active directory of users in AWS. This is like logging into a windows computer (Microsoft owns Windows).
 
 ### AWS Organization
-Cettrally manage and enforce policies for multiple AWS accounts
+Centrally manage and enforce policies for multiple AWS accounts
+
+# Detective Controls
+
+## AWS CloudTrail
+
+- Records API Calls made on our account to track changes made to our AWS resources
+
+This service is enabled by default on our AWS Account
+
+### CloudTrail Log File Examples
+
+#### Verify the user's identify
+
+![CloudTrail User Identity](./images/cloudtrail-useridentity.png)
+
+#### When and from where?
+- userAgent field describes what was used to send the request
+
+![CloudTrail When & Where](./images/cloudtrail-whenwhere.png)
+
+#### What happened?
+
+![CloudTrail What Happened](./images/cloudtrail-whathappened.png)
+
+### A proper Amazon Cloud*Watch* Architecture (different from Cloud*Trail*)
+
+![CloudWatch Architecture](./images/amazon-cloudwatch.png)
+
+1) CloudWatch **Agents** are installed to allow communication between say an EC2 instance and CloudWatch
+2) CloudWatch **Events** processes events
+3) AWS Lambda is a "serverless" function where we only pay for it's compute time.
+4) CloudWatch alarms can trigger AWS Services like AWS Lambda and Amazon SNS depending on a certain event
+5) Amazon SNS stands for Simple Notification Service and can notify by email, mobile device, lambda functions, Amazon Simple Queue Service, etc.
+
+## Auditing on AWS
+
+- Amazon S3 Access Logs
+  - Access logs contain details about requests like request type, date, time, etc
+- ELB (Elastic Load Balancing) Access Logs
+  - Captures detailed info about each request sent to our load balancer
+- Amazon CloudWatch Logs and Events
+  - Monitor and troubleshoot operating systems and applications running in our AWS environemtn
+  - Can look out for specific phrase, patterns and values
+- Amazon VPC Flow Logs
+  - Observe network traffic and see if you configured the virtual private cloud correctly
+  - VPC is essentially an isolated private network in our AWS environment
+- AWS CloudTrail logs
+  - The logs that records API calls made to our account through AWS CLI, AWS SDKs, or other AWS services
+
+## Additional AWS Services for Detective control
+- Amazon GuardDuty
+  - An Amazon service for threat detection by leveraging Machine Learning
+- AWS Trusted Advisor
+  - Inspects our AWS environments to make sure our system is efficient in performance and cost. Also it can find security gaps
+- Amazon VPC Flow Logs
+  - Captures information about the IP traffic going to and from network interfaces in our VPC
+  - Literally ONLY network traffic metadata like src IP, dst IP, ports, protocols (TCP or UDP), etc
+- AWS Security Hub
+  - A dashboard that allows us to oversee secuirty alerts and compliance status across AWS Accounts
+
+## AWS Config
+
+A continous monitoring and assessment service to help detect non-compliance configurations in real time
+
+It monitors AWS Resroouces like EC2 instances.
+
+AWS provides pre-built rules, but we can make our own rules too.
+
+An example would be ensuring encryption is turnd on for all EBS (Elastick Block Store) volumes in our account
+- For context, EBS is essential a virtual hard drive in the cloud that you attach to an EC2 instance
 
