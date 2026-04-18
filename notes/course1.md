@@ -58,3 +58,55 @@ Not every Region offers all AWS Services so we need to consider the services we 
 
 How to create applications and design architectures in the cloud that are **secure**
 
+### API Calls
+- Communication to AWS Services is eessentially making API requests to their API endpoints
+- AWS Services will **authenticate** every request (identify who you are) and check if the request has the **authorization** for that requested action using IAM
+  - When the service endpoint receives a request, it will call IAM internally to validate the credentials
+  - You can make requests using credentials from
+    - user access keys through IAM Users (if server isn't deployed as an AWS Instance)
+    - IAM Roles which are assigned to instances on AWS (Must be deployed in an AWS environement that supports using IAM Roles)
+
+### AWS Identity and Access Management
+
+This is the centralized mechanism for creating and managing individual users and their permisions with our AWS account (we are the root user)
+
+Types of AWS Credentials
+- Username and Password
+  - We can set a password policy to ensure secure passwords by users
+- Multi-Factor Authentication
+  - An additional step to be authenticated besides just username and password
+- User Access Keys
+  - Secret keys an IAM user can use to make API calls programmatically via AWS SDKs, AWS CLI, or even direct HTTPS (not common and can be a hassle because you need to use SigV4 to sign the request)
+- Amazon EC2 Key Pair
+  - Generate secret credentials that is used to ssh or remote desktop into an EC2 instance.
+  - Anyone can ssh into an EC2 instance if they can get access to the private key file
+
+### Amazon Cognito
+
+A service for end users to sign up, sign in, and authenticates users and manage what they are authorized to do. We essentially don't need to build our own login system.
+
+This is so that we don't need to manage a group of IAM Users, IAM Users are typically developer and those on the team. Amazon Cognito is used for clients that use our application.
+
+### AWS Secrets Manager
+
+An AWS Service that stores all of your secrets such as passwords, api keys, basically any arbitrary texts
+
+This is if we want to make API calls for secrets instead of storing secrets on a server for example.
+
+AWS Secrets Manager can also rotate keys, eliminating manual key rotations if stored on each server that we deploy.
+
+### AWS Security Token Services (STS)
+
+An Amazon service that grants IAM Users with temporary credentials when in need of diferent permissions
+
+For those who are performing another role temporarily, and is not permanent. We don't want to give them permanent permissions.
+
+### AWS IAM Identity Center
+A way to merge multiple AWS accoutns and business applications into 1 account. This is a Single Sign-On Service.
+
+### AWS Directory Service
+Run a Microsoft active directory of users in AWS. This is like logging into a windows computer (Microsoft owns Windows).
+
+### AWS Organization
+Cettrally manage and enforce policies for multiple AWS accounts
+
