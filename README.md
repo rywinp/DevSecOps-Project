@@ -17,6 +17,11 @@ The actions I chose were
 
 I didn't select anything else because this IAM User account didn't need any other permissions.
 
+As for the Resource, I stated that the IAM user has permission for this bucket "arn:aws:s3:::secops-assignment-rywin/*"
+
+The reason why I added the wildcard * at the end is because when we use the put_object api call, we must specify the Key for the object we are uploading.
+The Key acts as a path that is appended to the bucket resource so we essentially allow this IAM user to upload any objects with any Key name.
+
 ### Block 3 - FastAPI App
 
 I know the specifications of this assignment is to use the permissions of an IAM User to access AWS resources in our FastAPI Application via Access Keys, but I learned during block one that there exists IAM Roles. If we were to deploy this application on the cloud, it would be better to use IAM Roles instead of an access key because AWS is able to issue temporary credentials to the application via permissions allowed by the IAM Role that is attached to our server on AWS (possibly on an EC2 server). These temporary credentials are rotated automatically as well. We also wouldn't need to create or manage an IAM User.

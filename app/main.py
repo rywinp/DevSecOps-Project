@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import boto3
 
 # Pydantic Models for validating request bodies
 # Will reject requests that don't match this request body with Status 422 Unprocessable Entity
@@ -15,6 +16,7 @@ class ItemResponse(BaseModel):
     filename: str
 
 app = FastAPI()
+client = boto3.client('s3')
 
 @app.get("/health")
 async def health():
@@ -36,10 +38,26 @@ async def upload(item: ItemRequest) -> ItemResponse:
     # FastAPI will reject requests that don't match the ItemRequest Pydantic Model
 
     MAX_CONTENT_SIZE = 1_000_000
+    BUCKET_NAME = "secops-assignment-rywin"
 
     # Reject request if content is largeer than 1 MB
     if len(item.content.encode("utf-8")) > MAX_CONTENT_SIZE:
         raise HTTPException(status_code=400, detail="Content too large")
+
+    try:
+        # Attempt to upload object to S3 Bucket
+        client.put_object(
+            Bucket=BUCKET_NAME,
+            Key=item.filename,
+            Body=item.content.encode("utf-8"),
+            ContentType="text/plain",
+            Metadata={
+                "filename": item.filename
+            }
+        )
+    except Exception as e:
+        # Error from AWS
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
     # File successfully uploaded, return response
     return ItemResponse(uploaded=True, filename=item.filename)
