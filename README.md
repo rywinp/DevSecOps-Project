@@ -16,3 +16,7 @@ The actions I chose were
 3) s3:ListBucket - grants permission to list some or all of the objects in an Amazon S3 Bucket (up to 1000)
 
 I didn't select anything else because this IAM User account didn't need any other permissions.
+
+### Block 3 - FastAPI App
+
+I know the specifications of this assignment is to use the permissions of an IAM User to access AWS resources in our FastAPI Application via Access Keys, but I learned during block one that there exists IAM Roles. If we were to deploy this application on the cloud, it would be better to use IAM Roles instead of an access key because AWS is able to issue temporary credentials to the application via permissions allowed by the IAM Role that is attached to our server on AWS (possibly on an EC2 server). These temporary credentials are rotated automatically as well. We also wouldn't need to create or manage an IAM User.
