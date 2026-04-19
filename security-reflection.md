@@ -1,0 +1,7 @@
+## Question
+
+If the IAM credentials for this user were accidentally leaked in a public GitHub commit, what is the blast radius? What would you do in the first 30 minutes?
+
+## Answer
+
+The blast radius can be determined by identifying what permissions were leaked. An adversary could use the IAM's leaked credentials and act on behalf of that user. Any data in our S3 is essentially exposed to any adversary and can be written to as well. In our case, we turned on *Bucket Versioning* so if an adversary tried to overwrite any of our data in the S3, we would be able to recover previous values. In the first 30 minutes, the **first** thing I would do is to delete that IAM user from our AWS Account. The credentials have been leaked and I think the safest approach is to delete it. This would stop any further possible damage by an adversary. Next, I would gather information to learn what type of data was stored in the bucket. If any secrets were stored in the bucket, then those secrets might also have to be revoked and disabled because it may already be compromised. If possible, I would identify approximately when the IAM User's credentials were compromised, and view the AWS CLoudTrail logs to see what type of API calls were made while it was compromised. I would also view the S3 Access Logs for the secops-assignment-rywin bucket to see what type of requests may have been made while it was compromised as well. I would alert and notify my team about the incident that I discovered and communicate my findings.

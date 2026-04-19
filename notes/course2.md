@@ -21,7 +21,7 @@ Federated Users
 - We can allow **existing users** in our enterprise to have access to AWS resources
 - No need to create an IAM User for an existing user.
 
-Long-Term Access Keys (Legacy, use IAM roles)
+Long-Term Access Keys (Legacy, use IAM roles instead)
 - a permanent key pair used to access an AWS resource
 
 ## Task 1
@@ -41,7 +41,7 @@ Policy vs Permissions
 - A policy is the high level name that contains a set of permissions
 
 IAM Policy Structure
- - Version: version number for the policy
+ - Version: version number for the policy (It's an IAM Policy format version think of it as the rules and syntax for this IAM Policy language)
  - Statements: The permissions for a policy
    - Each statement has the following
      - Effect: *Allow* or *Deny*
