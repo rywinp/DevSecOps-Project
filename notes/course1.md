@@ -244,4 +244,50 @@ AWS Certificate Manager
 Amazon Macie
 - Uses ML to automatically discover, classify, and protect sensitive data in AWS
 
-Continue on AWS Service Spotlight on AWS KMS (Key Management Service)
+Amazon Key Management Service (KMS)
+- a Managed service that helps you create and manage, control the keys used in data encryption
+- Can encrypt S3, etc
+
+# Incident Response
+
+During investigations, you can use APIs, forensics on data volums, and AWS CloudFormation can be used to quickly create a new, trusted environemtn in which to conduct deeper investigation.
+
+### AWS Step Functions
+- You can coordinate multiple AWS Services into serverless wrokflows so you can build and update apps quikcly. Basically it can be triggered to an event and stich AWS Services together
+
+- The example given by the course was that when we verify we have a compromised instance, it will isolate the instance, records meta data and any other stuff, create a forensics environment to later investigate, and generate some reports and sent via Amazon SNS
+
+# DDos Mitigation
+
+Edge Locations are data centers in key cities. These are different from availability zones.
+
+Amazon Route 53 (layered security strategy)
+- a DNS Service that can be used to direct traffic to your web app. They are hosted at numerous AWS Edge locations. It can absorb large amounts of DDoS Traffic
+
+Amazon CloudFront (layered security strategy)
+- A CDN service that can deliver data. It also prevents DDoS attacks.
+- As access to Amazon CloudFront data increases, the data is copied to an edge location
+
+AWS Shield (Service secruity strategy)
+- A managed DDoS protection service that safeguards web applications that run on AWS
+
+AWS WAF
+- Web application firewall that protect web apps from common web exploits by
+  - web traffic filtering
+  - blocking malicious requests (SQL Injections, or Cross Site Scripting XSS)
+  - Tune Rules and monitor traffic
+
+# AWS Well-Architected Tool
+
+- A self service tool used to identify workloads and potential risks in our workload architectures
+
+- It can identify next steps for improvements by making sure it follows these guidelines...
+
+Six Pillars of the Well Architected Framework
+
+1) Operational excellence
+2) Secuirty
+3) Reliability
+4) Performance Efficiency
+5) Cost Optimization
+6) Sustainability
