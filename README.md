@@ -21,6 +21,7 @@ As for the Resource, I stated that the IAM user has permission for this bucket "
 
 The reason why I added the wildcard * at the end is because when we use the put_object api call, we must specify the Key for the object we are uploading.
 The Key acts as a path that is appended to the bucket resource so we essentially allow this IAM user to upload any objects with any Key name.
+The FastAPI Application uses the filename as the Key for the bucket.
 
 ### Block 3 - FastAPI App
 
