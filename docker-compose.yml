@@ -4,4 +4,4 @@ services:
     ports:
       - "8080:8080" # connect machine port 8080 to docker container port 8080
     volumes:
-      - ~/.aws:/root/.aws:ro # mount our AWS credentials as read only on runtime so it's not stored in the container
+      - ~/.aws:/root/.aws:ro # mount our AWS credentials as read only on runtime from host machine to the container
