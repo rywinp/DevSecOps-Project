@@ -4,9 +4,11 @@ To run the app locally, you must run
 $ docker compose up --build
 ```
 
-to build the image and spin up a container.
+You can now make requests to localhost:8080!
 
-To stop the container, do 
+Try visiting http://localhost:8080/health
+
+To stop the container, run
 
 ```
 $ docker compose down
