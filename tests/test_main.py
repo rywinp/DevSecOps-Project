@@ -23,12 +23,66 @@ def test_upload_basic():
         }
     )
     assert response.status_code == 200
-    assert response.json() == {"upload": True, "filename": "test-key-1"}
-    
+    assert response.json() == {"uploaded": True, "filename": "test-key-1"}
+
     # Use boto3 to check if the value matches what we uploaded
+    BUCKET_NAME = "secops-assignment-rywin"
+
+    response = s3_client.get_object(
+        Bucket=BUCKET_NAME,
+        Key="test-key-1"
+    )
+
+    assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
+    content = response["Body"].read().decode("utf-8")
+    assert content == "AAA"
+
 
 def test_upload_overwrite():
-    
+    response = client.post(
+        "/upload",
+        json={
+            "filename": "test-key-2",
+            "content": "AAA"
+        }
+    )
+    assert response.status_code == 200
+    assert response.json() == {"uploaded": True, "filename": "test-key-2"}
+
+    # Use boto3 to check if the value matches what we uploaded
+    BUCKET_NAME = "secops-assignment-rywin"
+
+    response = s3_client.get_object(
+        Bucket=BUCKET_NAME,
+        Key="test-key-2"
+    )
+
+    assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
+    content = response["Body"].read().decode("utf-8")
+    assert content == "AAA"
+
+    response = client.post(
+        "/upload",
+        json={
+            "filename": "test-key-2",
+            "content": "BBB"
+        }
+    )
+    assert response.status_code == 200
+    assert response.json() == {"uploaded": True, "filename": "test-key-2"}
+
+    # Use boto3 to check if the value matches what we uploaded
+    BUCKET_NAME = "secops-assignment-rywin"
+
+    response = s3_client.get_object(
+        Bucket=BUCKET_NAME,
+        Key="test-key-2"
+    )
+
+    assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
+    content = response["Body"].read().decode("utf-8")
+    assert content == "BBB"
+
 
 def test_large_content_rejected():
     large_content = "x" * 1_500_000  # 1.5MB string
