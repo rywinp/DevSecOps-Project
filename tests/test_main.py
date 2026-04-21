@@ -33,12 +33,14 @@ def test_upload_basic():
         Key="test-key-1"
     )
 
+    # Assert to make sure AWS has the value AAA
     assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
     content = response["Body"].read().decode("utf-8")
     assert content == "AAA"
 
 
 def test_upload_overwrite():
+    # Upload AAA to key
     response = client.post(
         "/upload",
         json={
@@ -57,10 +59,12 @@ def test_upload_overwrite():
         Key="test-key-2"
     )
 
+    # Assert value on AWS to be AAA
     assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
     content = response["Body"].read().decode("utf-8")
     assert content == "AAA"
 
+    # Overwrite key to be value BBB
     response = client.post(
         "/upload",
         json={
@@ -79,6 +83,7 @@ def test_upload_overwrite():
         Key="test-key-2"
     )
 
+    # Assert value on AWS to be BBB
     assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
     content = response["Body"].read().decode("utf-8")
     assert content == "BBB"
