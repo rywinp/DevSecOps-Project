@@ -29,3 +29,4 @@ I know the specifications of this assignment is to use the permissions of an IAM
 
 Currently, FastAPI leverages Uvicorn to run the server locally. Uvicorn itself accepts HTTP requests, but isn't ideal as a public entry point. If we were to deploy this application for clients in production, we need to secure the traffic by using TLS. AWS Security Fundamentals states that data must be protected at rest and **in transit**. Nginx is a popular tool used as a reverse proxy that will listen on the public port and proxies it to our application which would be hosted locally. TLS configuration is usually handled by Nginx on this reverse proxy layer. To configure HTTPS, we would need to obtain a certificate as well.
 
+[Successful Pipeline Run](https://github.com/rywinp/DevSecOps-Project/actions/runs/24710717223)
